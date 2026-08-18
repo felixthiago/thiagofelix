@@ -1,11 +1,10 @@
 'use client';
 
-// import { AbyssWire } from '@/components/AbyssWire';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSpring, useMotionValue, useMotionTemplate } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react';
 // import Image from 'next/image';
-import DeepDiveStage from '@/components/DeepDive';
+import { DeepDiveStage } from '@/components/content/DeepDive';
 
 export default function Portal() {
   const [isLoading, setIsLoading] = useState(true);
@@ -126,6 +125,7 @@ export default function Portal() {
           className={`relative flex items-center justify-center border-2 ${
             isOpen ? 'w-full min-h-screen z-30 cursor-default bg-[#050505] border-transparent' : 'w-64 h-64 cursor-pointer z-10'
           }`}
+
           animate={{
             width: isOpen ? '100vw' : '16rem',
             height: isOpen ? '100vh' : '16rem',
@@ -157,7 +157,7 @@ export default function Portal() {
           />
 
           <AnimatePresence>
-            {!isOpen && (
+            {!isOpen && !isClosing &&(
               <motion.svg
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.6, scale: isHovered ? 1.05 : 1 }}
@@ -196,25 +196,29 @@ export default function Portal() {
                   <img src="exit.svg" alt="Exit" width={32} height={32}/>
                 </button>
               </div>
-                <DeepDiveStage />
-                
+                <DeepDiveStage onClose={handleClosePortal} />
               </motion.div>
             )}
           </AnimatePresence>
 
         </motion.div>
 
-        <motion.div 
-          initial = {{opacity: 0}}
-          animate={{ opacity: isLoading ? 0 : 1 }}
-          transition={{ duration: 1, delay: isLoading ? 0 : 0.2 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="text-center relative z-10"
-        >
-          <span className="text-[14px] tracking-[0.2em] text-stone-500 block hover:opacity-80 transition-opacity duration-700">
-            [ entre no portal ]
-          </span>
-        </motion.div>
+        <AnimatePresence>
+          {!isOpen && (
+            <motion.div 
+              initial = {{opacity: 0}}
+              animate={{ opacity: isLoading ? 0 : 1 }}
+              transition={{ duration: 0.8, delay: isLoading ? 0 : 0.2 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="text-center relative z-10"
+            >
+              <span className="text-[14px] tracking-[0.2em] text-stone-500 block hover:opacity-80 transition-opacity duration-700">
+                [ entre no portal ]
+              </span>
+            </motion.div>
+          )}
+            
+        </AnimatePresence>
     </div>
   );
 }

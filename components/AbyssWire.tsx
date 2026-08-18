@@ -1,55 +1,49 @@
 'use client';
 
-import { motion, useScroll, useMotionTemplate } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 
 export function AbyssWire() {
-  // Captura o progresso do scroll do usuário (0 a 1)
   const { scrollYProgress } = useScroll();
+  
+  // Suaviza a leitura do scroll para evitar que a linha "trema" durante a rolagem rápida
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 20 });
 
   return (
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[300vh] pointer-events-none z-0">
-      
-      {/* O SVG que mapeia o caminho. A altura (300vh) deve acompanhar o tamanho total do seu currículo */}
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[100%] pointer-events-none z-0">
       <svg 
-        viewBox="0 0 100 1200" 
-        className="w-full h-full opacity-40" 
+        viewBox="0 0 100 100" 
+        className="w-full h-full opacity-60" 
         preserveAspectRatio="none"
       >
-        {/* 
-          1. O Fio Sinuoso (Curvas de Bezier) 
-          Desenhado progressivamente com base no scrollYProgress 
-        */}
-        <motion.path
-          d="
-            M 50 0 
-            C 100 100, 0 200, 50 300 
-            C 100 400, 0 500, 50 600 
-            C 100 700, 0 800, 50 900 
-            C 100 1000, 0 1100, 50 1200
-          "
+        {/* A Trilha Fantasma (Background) */}
+        <path
+          d="M 50 0 C 90 10, 10 30, 50 50 C 90 70, 10 90, 50 100"
           fill="none"
-          stroke="#e7e5e4"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          // A Mágica acontece aqui: o pathLength desenha a linha conforme o scroll
-          style={{ pathLength: scrollYProgress }} 
+          stroke="rgba(168, 162, 158, 0.05)"
+          strokeWidth="0.5"
+          vectorEffect="non-scaling-stroke"
         />
 
-        {/* 2. Os Pontos (Nodes) Estáticos pelo caminho */}
-        <motion.circle cx="50" cy="300" r="3" fill="#e7e5e4" />
-        <motion.circle cx="50" cy="600" r="3" fill="#e7e5e4" />
-        <motion.circle cx="50" cy="900" r="3" fill="#e7e5e4" />
+        {/* O Feixe de Luz Orgânico */}
+        <motion.path
+          d="M 50 0 C 90 10, 10 30, 50 50 C 90 70, 10 90, 50 100"
+          fill="none"
+          stroke="#d6d3d1"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          style={{ pathLength: smoothProgress }}
+        />
 
-        {/* 3. (Opcional) A Lanterna do Peixe Abissal guiando a ponta da linha */}
+        {/* A Lanterna Guia */}
         <motion.circle 
           cx="50" 
           cy="0" 
-          r="6" 
-          fill="#e7e5e4" 
-          className="drop-shadow-[0_0_8px_rgba(231,229,228,0.8)]"
+          r="2.5" 
+          fill="#ffffff" 
+          className="drop-shadow-[0_0_8px_rgba(255,255,255,0.9)]"
           style={{ 
-            // A bolinha de luz desce seguindo a porcentagem do scroll
-            y: useMotionTemplate`calc(${scrollYProgress} * 100%)` 
+            y: useMotionTemplate`calc(${smoothProgress} * 100%)` 
           }} 
         />
       </svg>
