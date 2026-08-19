@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
-import { LenisScroll } from "@/components/engine/LenisScroll";
 
 import "./globals.css";
+import { LanternCursor } from "@/components/atmosphere/LanternCursor";
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -21,15 +21,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
+    <html lang="en"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* <motion.div className = "pointer-events-none fixed inset-0 z-0" style = {{background: bgLight}}/> */}
-        <LenisScroll>
+        <LanternCursor />
           {children}
-        </LenisScroll>
       </body>
     </html> 
   );

@@ -17,8 +17,7 @@ export function LanternCursor() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // Cria um feixe radial sutil que imita a bioluminescência no escuro
-  const bgLight = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(139, 92, 246, 0.06), transparent 40%)`;
+  const bgLight = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(139, 92, 246, 0.06), transparent 40%)`;
 
   return (
     <motion.div

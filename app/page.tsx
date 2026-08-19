@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSpring, useMotionValue, useMotionTemplate } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { DeepDiveStage } from '@/components/content/DeepDive';
 
 
 export default function Portal() {
@@ -79,8 +80,8 @@ export default function Portal() {
   }
 
   return (
-    <div className={`relative flex flex-col bg-[#050505] font-sans text-stone-200 select-none ${
-      isOpen ? 'w-full min-h-screen' : 'min-h-screen items-center justify-center overflow-hidden p-8 gap-12'
+    <div className={`relative flex flex-col bg-[#050505] font-sans text-stone-200 overflow-hidden ${
+      isOpen ? 'w-full min-h-screen ' : 'min-w-screen min-h-screen items-center justify-center p-8 gap-12'
       }`}>
 
       <motion.div className="pointer-events-none fixed inset-0 z-0" style={{ background: bgLight }} />
@@ -183,18 +184,19 @@ export default function Portal() {
 
 
           <AnimatePresence>
-            {isOpen && !isClosing && (
+            {isOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{duration: 1, ease: "easeInOut" }}
-                className="relative z-20 flex w-full min-h-screen text-stone-400"
+                className="relative z-20 flex w-full h-full text-stone-400"
               >
-                <div className="fixed bottom-8 right-8 z-50 p-3 border border-stone-800 rounded-full bg-[#050505]/80 backdrop-blur-md hover:scale-105 transition transform duration-300 ease-in-out cursor-pointer group">
+                <DeepDiveStage onClose = {handleClosePortal} />
                 
+                <div className="fixed bottom-8 right-8 z-50 p-3 border border-stone-800 rounded-full bg-[#050505]/80 backdrop-blur-md hover:scale-105 transition transform duration-300 ease-in-out cursor-pointer group">
                 <button onClick={handleClosePortal} className="cursor-pointer flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
-                  <img src="exit.svg" alt="Exit" width={32} height={32}/>
+                  <Image src="exit.svg" alt="Exit" width={32} height={32}/>
                 </button>
               </div>
                 

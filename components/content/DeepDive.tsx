@@ -1,88 +1,101 @@
 'use client';
 
-import { LanternCursor } from '@/components/LanternCursor';
+import { motion } from 'framer-motion';
+import { LanternCursor } from '@/components/atmosphere/LanternCursor';
 import { AbyssWire } from '@/components/AbyssWire';
-import { ProjectRow } from './ProjectRow';
+import { ProjectRow } from '@/components/content/ProjectRow';
 
 interface DeepDiveStageProps {
   onClose: (e: React.MouseEvent) => void;
 }
 
-export function DeepDiveStage({ onClose }: DeepDiveStageProps) {
+export function DeepDiveStage({ onClose: _onClose }: DeepDiveStageProps) {
   return (
-    <div className="relative w-full min-h-screen bg-[#050505] flex flex-col items-center overflow-x-hidden">
-      
+    <div className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden bg-[#050505]">
       <LanternCursor />
-      
+
       {/* O eixo principal de luz e geometria */}
       <AbyssWire />
 
-      <div className="relative z-10 w-full flex flex-col py-[15vh]">
-        
+      {/* Grão de filme sobre toda a cena — textura Lynchiana */}
+      <div
+        className="pointer-events-none fixed inset-0 z-30 opacity-[0.04] mix-blend-screen"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")",
+        }}
+      />
+
+      <div className="relative z-10 flex w-full flex-col pb-[10vh] pt-[22vh]">
         {/* Registro Identificador */}
-        <header className="flex flex-col items-center justify-center w-full min-h-[30vh] pb-24 text-center">
-          <h1 className="text-4xl md:text-6xl font-serif text-stone-200 tracking-wide">
+        <header className="flex min-h-[45vh] w-full flex-col items-center justify-center pb-24 text-center">
+          <motion.p
+            initial={{ opacity: 0, letterSpacing: '0.2em' }}
+            animate={{ opacity: 0.5, letterSpacing: '0.5em' }}
+            transition={{ duration: 1.6, ease: 'easeOut' }}
+            className="mb-6 font-mono text-[10px] uppercase text-stone-500"
+          >
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif text-5xl tracking-wide text-stone-100 md:text-7xl"
+          >
             Thiago Oliveira Felix
-          </h1>
-          <p className="mt-6 text-[10px] tracking-[0.4em] font-mono text-stone-500 uppercase">
-            Engenharia de Software // Lógica de Baixo Nível
-          </p>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.4, delay: 0.6 }}
+            className="mt-6 max-w-md font-serif text-lg italic text-stone-400"
+          >
+            Software Engineer
+          </motion.p>
         </header>
 
-        {/* Integração de Dados Técnicos */}
-        <div className="flex flex-col w-full relative">
-          
-          <ProjectRow 
+        <div className="relative flex w-full flex-col">
+          <ProjectRow
             number="01"
             title="VeriFact"
-            description="Construção de uma extensão de navegador focada em checagem de fatos em tempo real[cite: 1, 2]. Desenvolvimento operado em React e Plasmo, integrando a Google Fact Checking API e LLMs (Groq) com rigorosa economia de tokens de modelo[cite: 1, 2]."
+            description="Extensão de navegador focada em checagem de fatos em tempo real. Verifica noticias em sites como twitter, instagram, reddit e foi construída em React e Plasmo, integrando a Google Fact Checking API e LLMs (Groq) com rigorosa economia de tokens de modelo."
             meta="FEV 2026 — PRESENTE • REACT • FASTAPI • LLM"
-            imagePlaceholderText="Pipeline Real-Time"
+            img="/verifact.png"
+
             isReversed={false}
           />
 
-          <ProjectRow 
+          <ProjectRow
             number="02"
             title="Macawdemy"
-            description="Atuação na liderança técnica para estruturação do ecossistema da plataforma de aprendizagem[cite: 1, 2]. Implementação de backend focado em microsserviços via Python, utilizando algoritmos de repetição espaçada (FSRS) sob infraestrutura AWS[cite: 1, 2]."
+            description="Plataforma educacional completa, com cursos, gamificação e simulados para análise de desempenho com repetição espaçada. Meu papel foi de Liderança técnica, Backend em Python, algoritmos de repetição espaçada (FSRS) e infraestrutura AWS. "
             meta="JAN 2025 — DEZ 2025 • NEXT.JS • PYTHON • AWS"
-            imagePlaceholderText="Arquitetura de Microsserviços"
+            img="/macawdemy.png"
             isReversed={true}
           />
-
-          <ProjectRow 
-            number="03"
-            title="ETEC (Centro Paula Souza)"
-            description="Elaboração arquitetural de aplicação fullstack envolvendo React, React Native e Python conectados a bancos PostgreSQL[cite: 1, 2]. O projeto de conclusão consolidou pipelines de dados orientados à geração de simulados adaptativos por IA[cite: 1, 2]."
-            meta="JAN 2023 — DEZ 2025 • CLEAN ARCHITECTURE"
-            imagePlaceholderText="Estrutura Relacional"
-            isReversed={false}
-          />
-
-          <ProjectRow 
-            number="04"
-            title="UNICSUL"
-            description="Imersão na graduação de Análise e Desenvolvimento de Sistemas[cite: 1, 2]. Construção da base acadêmica direcionada ao suporte de ecossistemas complexos de software."
-            meta="JAN 2026 — PRESENTE • GRAU SUPERIOR"
-            imagePlaceholderText="Registro Analítico"
-            isReversed={true}
-          />
-
         </div>
 
-        {/* Ponto de Extração de Dados */}
-        <footer className="flex justify-center w-full mt-32 mb-48 relative z-20">
-          <a 
-            href="https://seulink.vercel.app/resume.pdf" 
-            target="_blank" 
+        {/* Ponto de Extração — nó terminal do fio, revelado só ao chegar ao fim */}
+        <motion.footer
+          initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          // viewport={{ once: false, margin: '0px 0px -20% 0px' }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-20 flex flex-col items-center gap-36 w-full"
+        >
+          <span className="h-[7px] w-[7px] rounded-full bg-violet-100 shadow-[0_0_20px_rgba(196,181,253,0.9)]" />
+          <a
+            href="/resume.pdf"
+            target="_blank"
             rel="noopener noreferrer"
-            className="group relative px-6 py-4 text-[10px] tracking-[0.4em] font-mono uppercase text-stone-500 hover:text-stone-200 transition-colors bg-[#050505]/50 backdrop-blur-md"
+            className="group/link relative px-3 py-4 font-mono text-[14px] tracking-[0.4em] text-stone-500 transition-colors hover:text-stone-100"
           >
-            [ Extrair Currículo Completo ]
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-stone-500 group-hover:w-full transition-all duration-700" />
+            [ view full resumé ]
+            <span className="absolute bottom-0 left-1/2 h-[1px] w-0 -translate-x-1/2 bg-violet-300/70 transition-all duration-700 group-hover/link:w-full" />
           </a>
-        </footer>
-
+        </motion.footer>
       </div>
     </div>
   );
