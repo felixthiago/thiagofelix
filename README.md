@@ -1,7 +1,8 @@
-<h3 style="text-align: center;">This is the first iteration of my personal portfolio.</h3>
+<h3 align = "center";">This is the first iteration of my personal portfolio.</h3>
 
-<p style="text-align: center;">Highly inspired by David Lynch's series, Twin Peaks.
+<p align = "center"">Highly inspired by David Lynch's series, Twin Peaks.
 
+--- 
 ![Image in production](screenshot.png)
 
 ## Installation and Setup
